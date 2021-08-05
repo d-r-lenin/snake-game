@@ -2,48 +2,54 @@ let canvas,
     WIDTH,
     HEIGHT,
     ctx,
-    x   = 0,
+    x   = 30,
     y   = 0,
     dir = "r",
-    box ,
-    oldTimeStamp ;
+    dif = 10,
+    snake ,
+    oldTimeStamp,
+    total = 0;
 
 function init(){
     canvas = document.querySelector("#can");
     HEIGHT = canvas.height;
     WIDTH = canvas.width;
     ctx = canvas.getContext("2d");
-    box = new Box(ctx, x, y, 10,10, "#f00");
-    
+    snake = new Snake(ctx, x, y, 10,10, "#f00");
+    snake.push();
+    snake.push();
+    snake.push();
+    snake.push();
+    snake.push();
+    snake.push();
+    snake.drow();
     window.requestAnimationFrame(loop);
 }
 
 function loop (stamp){
-    drow();
-        // Calculate the number of seconds passed since the last frame
-        secondsPassed = (stamp - oldTimeStamp) / 1000;
-        oldTimeStamp = stamp;
-        fps = Math.round(1 / secondsPassed);
+    secondsPassed = (stamp - oldTimeStamp) / 1000;
+    oldTimeStamp = stamp;
+    if(!isNaN(secondsPassed)){
+        total = total + secondsPassed;
+    }
+    if(total > .200){
+        total = 0;
+        clear();
+        if(dir === "r") {
+            x = x+dif;
+        }else if(dir === "l"){
+            x = x-dif;
+        }else if(dir === "u"){
+            y = y-dif;
+        }else if(dir === "d"){
+            y = y+dif;
+        }
+        snake.update(x,y);       
+    }
 
     window.requestAnimationFrame(loop);
 }
 
-function drow(){
-    clear();
-    if(dir === "r") {
-        x++;
-    }else if(dir === "l"){
-        x--;
-    }else if(dir === "u"){
-        y--;
-    }else if(dir === "d"){
-        y++;
-    }
-    box.setxy(x,y)
-    box.update();
-    
-    
-}
 
 document.addEventListener("keydown" , e =>{
     if(e.code === "KeyD" && dir !== "l") dir = 'r';
@@ -51,7 +57,6 @@ document.addEventListener("keydown" , e =>{
     else if(e.code === "KeyS" && dir !== "u") dir = 'd';
     else if(e.code === "KeyW" && dir !== "d") dir = 'u';
 
-    console.log(e);
 })
 
 const clear = () =>{
