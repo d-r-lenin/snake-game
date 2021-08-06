@@ -18,13 +18,19 @@ class Snake {
     update = (x = this.body[this.head].x, y = this.body[this.head].y)=>{
         this.ctx.fillStyle = this.color;
         this.move(x , y);
-        this.drow();
-
+        this.draw();
     }
-        
-
-    pop = ()=>{
-
+    
+    hitsWall = ()=>{
+        if(
+            (this.body[0].x < 0) ||
+            (this.body[0].x >= this.ctx.canvas.width) ||
+            (this.body[0].y < 0) ||
+            (this.body[0].y >= this.ctx.canvas.height)
+        ){
+            return true;
+        }
+        return false;
     }
 
     push = () =>{
@@ -35,7 +41,7 @@ class Snake {
         this.tail++;
     }
 
-    drow = ()=>{
+    draw = ()=>{
         this.body.forEach((pos)=>{
             this.ctx.fillRect(pos.x,pos.y,this.width,this.height);
         });
@@ -50,6 +56,21 @@ class Snake {
         }
         this.body.pop();
         this.body[this.head] = { x , y };
+    }
+
+    hitsFood = (food) =>{
+
+        return false
+    }
+    isOverlapping1D = (box1,box2)=>{
+        let xmax1 = box1.x;
+        let xmax2 = box2.x;
+        let xmin1 = box1.y;
+        let xmin2 = box2.y; 
+        return (xmax1 >= xmin2) && (xmax2 >= xmin1);
+    }
+    isOverlapping2D = (box1,box2)=>{
+        
     }
 }
 
