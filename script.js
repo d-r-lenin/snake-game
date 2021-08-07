@@ -26,14 +26,14 @@ class Game{
         if(!isNaN(secondsPassed)){
             this.total = this.total + secondsPassed;
         }
-        if(this.total > .200){
+        if(this.total > .150){
             this.total = 0;
 
             if(this.snake.hitsWall()){
-               return;
-            }
-
-            this.clear();
+                this.snake.draw;
+                return;
+             }
+             
             if(this.dir === "r") {
                 this.x = this.x+this.dif;
             }else if(this.dir === "l"){
@@ -43,12 +43,14 @@ class Game{
             }else if(this.dir === "d"){
                 this.y = this.y+this.dif;
             }
-            this.food.show()
+
+            this.clear();
             this.snake.update(this.x,this.y);
-            
-            if(this.snake.hitsFood(this.food)){
+            if(this.isSnakeFeded()){
                 this.food.toggle();
+                this.snake.push();
             }
+            this.food.show()
         }
 
         window.requestAnimationFrame(this.loop);
@@ -67,4 +69,16 @@ class Game{
         this.ctx.clearRect(0,0,this.WIDTH,this.HEIGHT);
     }
 
+
+    isSnakeFeded = () => {
+        if(this.getDist(this.snake.center,this.food.center) < 8 ){
+            return true;
+        }
+        return false;
+    }
+
+    getDist = (a , b) => {
+        let c = Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
+        return c;
+    }
 }

@@ -56,22 +56,39 @@ class Snake {
         }
         this.body.pop();
         this.body[this.head] = { x , y };
+        this.setRect();
     }
 
-    hitsFood = (food) =>{
+    hitsSelf = () =>{
 
-        return false
     }
-    isOverlapping1D = (box1,box2)=>{
-        let xmax1 = box1.x;
-        let xmax2 = box2.x;
-        let xmin1 = box1.y;
-        let xmin2 = box2.y; 
-        return (xmax1 >= xmin2) && (xmax2 >= xmin1);
+
+    setRect = () => {
+        this.rect = {
+            A : {
+                x : this.body[this.head].x,
+                y : this.body[this.head].y
+            },
+            B : {
+                x : this.body[this.head].x + this.width,
+                y : this.body[this.head].y
+            },
+            C : {
+                x : this.body[this.head].x + this.width,
+                y : this.body[this.head].y + this.height
+            },
+            D : {
+                x : this.body[this.head].x,
+                y : this.body[this.head].y + this.height
+            }
+        }
+        this.setCenter(this.rect);
     }
-    isOverlapping2D = (box1,box2)=>{
-        
+
+    setCenter = box =>{
+        this.center = {
+            x: (box.A.x + (this.width/2)),
+            y: (box.A.y + (this.height/2))
+        }
     }
 }
-
-
