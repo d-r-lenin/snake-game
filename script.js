@@ -1,4 +1,3 @@
-
 class Game{
     constructor(){
         this.x   = 30;
@@ -7,7 +6,7 @@ class Game{
         this.dif = 10;
         this.total = 0;    
         this.setListener();
-        this.init();    
+        this.init();
     }
     
     init = ()=>{
@@ -16,6 +15,9 @@ class Game{
         this.WIDTH = this.canvas.width;
         this.ctx = this.canvas.getContext("2d");
         this.snake = new Snake(this.ctx, this.x, this.y, 10,10, "#f00");
+        this.snake.push();
+        this.snake.push();
+        this.snake.push();
         this.food = new Food(this.ctx);
         window.requestAnimationFrame(this.loop);
     }
@@ -26,14 +28,9 @@ class Game{
         if(!isNaN(secondsPassed)){
             this.total = this.total + secondsPassed;
         }
-        if(this.total > .150){
+        if(this.total > .10){
             this.total = 0;
-
-            if(this.snake.hitsWall()){
-                this.snake.draw;
-                return;
-             }
-             
+              
             if(this.dir === "r") {
                 this.x = this.x+this.dif;
             }else if(this.dir === "l"){
@@ -43,14 +40,21 @@ class Game{
             }else if(this.dir === "d"){
                 this.y = this.y+this.dif;
             }
-
+            if(this.snake.hitsWall(this.x,this.y)){
+                return this.gameover(1000);
+            }
+            if(this.snake.hitsSelf()){
+                return this.gameover(1001);
+            }
             this.clear();
+            this.food.show()
             this.snake.update(this.x,this.y);
             if(this.isSnakeFeded()){
                 this.food.toggle();
                 this.snake.push();
             }
-            this.food.show()
+            
+            
         }
 
         window.requestAnimationFrame(this.loop);
@@ -80,5 +84,14 @@ class Game{
     getDist = (a , b) => {
         let c = Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
         return c;
+    }
+    gameover = (code) =>{
+        if(code === 1000){
+           return console.log("you hit")
+        }
+        if(code === 1001){
+            return console.log("you bite yourself");
+        }
+        console.log("stoped")
     }
 }
