@@ -1,0 +1,16 @@
+canvas{
+    border: 3px solid #000;
+}
+
+
+
+body{
+    margin: 0px auto;
+    padding: 0px;
+}
+
+#container{
+    max-width: 900px;
+    margin: inherit;
+    background-color: aquamarine;
+}
