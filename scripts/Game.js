@@ -1,28 +1,49 @@
 class Game{
-    constructor(){
+    constructor(root){
+        this.root = root;
         this.x   = 30;
         this.y   = 0;
         this.dir = "r";
         this.dif = 10;
-        this.total = 0;    
+        this.score = 0;
+        this.highScore = this.score;
+        this.total = 0;
+        this.isPaused = false;    
         this.setListener();
-        this.init();
     }
     
-    init = ()=>{
-        this.canvas = document.querySelector("#can");
+    onScore = null;
+    onHighScore = null; 
+    
+    pause = () =>{
+        this.isPaused = true;
+    }
+
+    resume = () =>{
+        this.isPaused = false;
+        this.loop();
+    }
+
+    start = ()=>{
+        this.isPaused = false;
+        this.canvas = this.root;
         this.HEIGHT = this.canvas.height;
         this.WIDTH = this.canvas.width;
         this.ctx = this.canvas.getContext("2d");
-        this.snake = new Snake(this.ctx, this.x, this.y, 10,10, "#f00");
-        this.snake.push();
-        this.snake.push();
-        this.snake.push();
+        this.snake = new Snake(this.ctx, this.x, this.y, 10, "#f00");
+        this.snake.push(this.dir);
         this.food = new Food(this.ctx);
+
+        if(this.onScore)      this.onScore(this.score);
+        if(this.onHighScore)  this.onHighScore(this.score);
+        
         window.requestAnimationFrame(this.loop);
     }
 
     loop = (stamp) =>{
+        if(this.isPaused){
+            return;
+        }
         let secondsPassed = (stamp - this.oldTimeStamp) / 1000;
         this.oldTimeStamp = stamp;
         if(!isNaN(secondsPassed)){
@@ -41,15 +62,22 @@ class Game{
                 this.y = this.y+this.dif;
             }
             if(this.snake.hitsWall(this.x,this.y)){
+                this.score = 0;
                 return this.gameover(1000);
             }
             if(this.snake.hitsSelf()){
+                this.score = 0;
                 return this.gameover(1001);
             }
             this.clear();
             this.food.show()
             this.snake.update(this.x,this.y);
             if(this.isSnakeFeded()){
+                this.score = this.score + 1;
+                this.setHighScore();
+                if(this.onScore){
+                    this.onScore(this.score);
+                }
                 this.food.toggle();
                 this.snake.push();
             }
@@ -59,6 +87,7 @@ class Game{
 
         window.requestAnimationFrame(this.loop);
     }
+
 
     setListener = ()=>{
         document.addEventListener("keydown" , e =>{
@@ -85,6 +114,8 @@ class Game{
         let c = Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
         return c;
     }
+
+
     gameover = (code) =>{
         if(code === 1000){
            return console.log("you hit")
@@ -94,4 +125,15 @@ class Game{
         }
         console.log("stoped")
     }
+
+
+    setHighScore = ()=>{
+        if(this.score > this.highScore){
+            this.highScore = this.score;
+            if(this.onHighScore){
+                this.onHighScore(this.highScore);
+            }
+        }
+    }
+
 }

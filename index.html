@@ -5,16 +5,30 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <script src="Food.js"></script>
-        <script src="Snake.js"></script>
+        <script src="/scripts/Food.js"></script>
+        <script src="/scripts/Snake.js"></script>
+        <script src="/scripts/Game.js"></script>
     </head>
-    <body onload="new Game();">
+    <body onload="getStarted();">
+        <header id="head">
+            <h1>Snake</h1>
+            <small class="author">by <a href="https://github.com/d-r-lenin">D.R.lenin</a></small>
+        </header>
+        <section id="section">
+            <div class="in-sec" id="score">0</div>
+            <div class="in-sec" id="high-score">0</div>
+            <div class="in-sec" id="btns">
+                <button class="button" id="pause-btn">Pause</button>
+                <button class="button" id="resume-btn">Resume</button>
+            </div>
+        </section>
         <canvas 
             id="can" 
             width="500px" 
             height="500px"
             style="border: 3px solid #000;"
         ></canvas>
-        <script src="script.js"></script>
+        <h1 id="score"></h1>
+        <script src="/scripts/script.js"></script>
     </body>
 </html>

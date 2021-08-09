@@ -1,9 +1,8 @@
 
 class Snake {
-    constructor(ctx,x = 0,y = 0, w, h, color = "#000"){
+    constructor(ctx,x = 0,y = 0, size, color = "#000"){
         this.ctx = ctx;
-        this.width = w;
-        this.height = h;
+        this.size = size;
         this.color = color;
         this.body = [{x,y}];
         this.head = 0;
@@ -34,17 +33,29 @@ class Snake {
         return false;
     }
 
-    push = () =>{
-        this.body.push ({
-            x : this.body[this.tail].x - this.width ,
-            y : this.body[this.head].y
-        });
+    push = (dir) =>{
+
+        let newBox =  {
+            x:this.body[this.tail].x,
+            y:this.body[this.tail].y
+        };
+        if (dir === "r") {
+            newBox.x = newBox.x - this.size;
+        } else if (dir === "l") {
+            newBox.x = newBox.x + this.size;
+        } else if (dir === "u") {
+            newBox.y = newBox.y + this.size;
+        } else if (dir === "d") {
+            newBox.y = newBox.y - this.size;
+        }
+
+        this.body.push(newBox);
         this.tail++;
     }
 
     draw = ()=>{
         this.body.forEach((pos)=>{
-            this.ctx.fillRect(pos.x,pos.y,this.width,this.height);
+            this.ctx.fillRect(pos.x,pos.y,this.size,this.size);
         });
     }
 
@@ -61,9 +72,8 @@ class Snake {
     }
 
     hitsSelf = () =>{
-        let i = 0;
-        for(let j = i+1; j <this.body.length; j++){
-            if(this.isCross(this.body[i],this.body[j])){
+        for(let j = 1; j < this.body.length; j++){
+            if(this.isCross(this.body[0],this.body[j])){
                 return true;
             }
         }
@@ -78,8 +88,8 @@ class Snake {
 
     setCenter = box =>{
         this.center = {
-            x: (box.A.x + (this.width/2)),
-            y: (box.A.y + (this.height/2))
+            x: (box.A.x + (this.size/2)),
+            y: (box.A.y + (this.size/2))
         }
     }
 
@@ -92,7 +102,7 @@ class Snake {
         A = this.getRect(A);
         B = this.getRect(B);
         let dist = this.getDist(this.getCenter(A),this.getCenter(B));        
-        if(dist < this.width){
+        if(dist < this.size-3){
             console.log(dist);
             return true;
         }
@@ -109,16 +119,16 @@ class Snake {
                 y : point.y
             },
             B : {
-                x : point.x + this.width,
+                x : point.x + this.size,
                 y : point.y
             },
             C : {
-                x : point.x + this.width,
-                y : point.y + this.height
+                x : point.x + this.size,
+                y : point.y + this.size
             },
             D : {
                 x : point.x,
-                y : point.y + this.height
+                y : point.y + this.size
             }
         }
         return rect;
@@ -130,8 +140,8 @@ class Snake {
         }
 
         let center = {
-            x : rect.A.x + (this.width/2),
-            y : rect.A.y + (this.height/2)
+            x : rect.A.x + (this.size/2),
+            y : rect.A.y + (this.size/2)
         }
 
         return center;
