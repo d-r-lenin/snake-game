@@ -5,28 +5,44 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        <link rel="stylesheet" href="/snake-game/css/style.css">
-        <script src="/snake-game/scripts/Food.js"></script>
-        <script src="/snake-game/scripts/Snake.js"></script>
-        <script src="/snake-game/scripts/Game.js"></script>
+        <link rel="stylesheet" href="/css/style.css">
+        <script src="/scripts/Food.js"></script>
+        <script src="/scripts/Snake.js"></script>
+        <script src="/scripts/Game.js"></script>
     </head>
     <body onload="getStarted();">
       <div id="container">
             <header id="head">
                 <h1>Snake</h1>
-                <small class="author">by <a href="https://github.com/d-r-lenin">D.R.lenin</a></small>
+                <small class="author">by <a href="https://github.com/d-r-lenin">d-r-lenin</a></small>
             </header>
             <section id="section">
                 <div class="in-sec" id="score">0</div>
                 <div class="in-sec" id="high-score">0</div>
-                <div class="in-sec" id="btns">
-                    <button class="button" id="pause-btn">Pause</button>
-                    <button class="button" id="resume-btn">Resume</button>
-                </div>
             </section>
-            <canvas id="can" width="500px" height="500px"></canvas>
-            <h1 id="score"></h1>
+            <section id="game-display">
+                <div id="game-place">
+                    <canvas id="can" width="500px" height="500px"></canvas>
+                    <div id="gameover-card" class="hide">
+                        <h3>Game Over</h3> 
+                        <button>Retry</button>
+                    </div>
+                </div>
+                <div class="in-game" id="btns">
+                    <button class="button" onclick="game.pause()" id="pause-btn">Pause</button>
+                    <button class="button" onclick="game.resume()" id="resume-btn">Resume</button>
+                </div>
+
+            </section>
+            <section id="controll" >
+                <ul>
+                    <li id="up"><button>UP</button></li>
+                    <li id="down"><button>DOWN</button></li>
+                    <li id="left"><button>LEFT</button></li>
+                    <li id="right"><button>RIGHT</button></li>
+                </ul>
+            </section>
       </div>
-        <script src="/snake-game/scripts/script.js"></script>
+        <script src="/scripts/script.js"></script>
     </body>
 </html>

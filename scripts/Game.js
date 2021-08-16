@@ -1,19 +1,20 @@
 class Game{
-    constructor(root){
+    constructor(root,lev = .1){
         this.root = root;
         this.x   = 30;
         this.y   = 0;
         this.dir = "r";
         this.dif = 10;
+        this.lev = lev;
         this.score = 0;
         this.highScore = this.score;
         this.total = 0;
-        this.isPaused = false;    
+        this.isPaused = false;
         this.setListener();
     }
     
     onScore = null;
-    onHighScore = null; 
+    onHighScore = null;
     
     pause = () =>{
         this.isPaused = true;
@@ -22,6 +23,14 @@ class Game{
     resume = () =>{
         this.isPaused = false;
         this.loop();
+    }
+
+    restart = ()=>{
+        this.x = 30;
+        this.y = 10;
+        delete(this.snake);
+        this.dir = 'r'
+        this.start();
     }
 
     start = ()=>{
@@ -35,7 +44,6 @@ class Game{
         this.food = new Food(this.ctx);
 
         if(this.onScore)      this.onScore(this.score);
-        if(this.onHighScore)  this.onHighScore(this.score);
         
         window.requestAnimationFrame(this.loop);
     }
@@ -49,7 +57,7 @@ class Game{
         if(!isNaN(secondsPassed)){
             this.total = this.total + secondsPassed;
         }
-        if(this.total > .10){
+        if(this.total > this.lev){
             this.total = 0;
               
             if(this.dir === "r") {
@@ -96,6 +104,9 @@ class Game{
             else if(e.code === "KeyS" && this.dir !== "u") this.dir = 'd';
             else if(e.code === "KeyW" && this.dir !== "d") this.dir = 'u';
         })
+        if(this.listen){
+            this.listen();
+        }
     }
 
     clear = () =>{

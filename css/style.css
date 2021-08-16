@@ -1,16 +1,124 @@
-canvas{
-    border: 3px solid #000;
-}
-
-
-
-body{
+*{
     margin: 0px auto;
     padding: 0px;
+    user-select: none;
 }
 
 #container{
     max-width: 900px;
     margin: inherit;
-    background-color: aquamarine;
+}
+
+canvas{
+    border: 3px solid #000;
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    top: 0;
+}
+h1{
+    font-size: 10vh;
+}
+header{
+    text-align: center;
+}
+
+#btns{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: .5em;
+}
+
+#game-place{
+    position: relative;
+    width:500px;
+    height: 500px;
+}
+#section{
+    display: flex;
+}
+
+.hide{
+    display: none;
+}
+.block{
+    display: block;
+}
+
+#gameover-card{
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: #afafaf;
+    border: 2px black solid;
+    top:30%;
+    left: 30%;
+}
+
+#controll{
+    display: none;
+}
+
+ul{
+    list-style: none;         
+}
+
+@media screen and (max-width:600px) {
+    *{
+        font-size: 5vw;
+    }
+
+    body{
+        width: 500px;
+        height: 100vh;
+        max-width: fit-content;
+        border: 1px;
+    }
+
+    #container{
+        width: 100%;
+    }
+
+    #controll{
+        display: block;
+        width: 500px;
+        margin-top: 1rem;
+    }
+    #controll ul {
+        display: grid;
+        grid-gap: 2rem;
+        width: 50%;
+        grid-template-rows: 2em 2em 2em;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    #up{
+        grid-column-start: 2;
+        grid-column-end: 4;
+    }
+    #right{   
+        grid-row-start: 2;
+        grid-column-start:3;
+        grid-column-end: 5;
+    }
+    #left{   
+        grid-row-start: 2;
+        grid-column-start:1;
+        grid-column-end: 3;
+    }
+    
+    #down{   
+        grid-row-start: 3;
+        grid-column-start:2;
+        grid-column-end: 4;
+    }
+
+    #controll button{
+        font-size: 2rem;
+    }
+    h1{
+        font-size: 2.5rem;
+    }
 }
