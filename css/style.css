@@ -17,6 +17,7 @@ canvas{
     top: 0;
 }
 h1{
+    margin-top: -.2em;
     font-size: 10vh;
 }
 header{
@@ -68,7 +69,9 @@ ul{
     *{
         font-size: 5vw;
     }
-
+    h1{
+        margin-top: 0;
+    }
     body{
         width: 500px;
         height: 100vh;
