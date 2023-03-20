@@ -99,10 +99,10 @@ class Game{
 
     setListener = ()=>{
         document.addEventListener("keydown" , e =>{
-            if(e.code === "KeyD" && this.dir !== "l") this.dir = 'r';
-            else if(e.code === "KeyA" && this.dir !== "r") this.dir = 'l';
-            else if(e.code === "KeyS" && this.dir !== "u") this.dir = 'd';
-            else if(e.code === "KeyW" && this.dir !== "d") this.dir = 'u';
+            if(e.code === "ArrowRight" && this.dir !== "l") this.dir = 'r';
+            else if(e.code === "ArrowLeft" && this.dir !== "r") this.dir = 'l';
+            else if(e.code === "ArrowDown" && this.dir !== "u") this.dir = 'd';
+            else if(e.code === "ArrowUp" && this.dir !== "d") this.dir = 'u';
         })
         if(this.listen){
             this.listen();
